@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalong="no"?>
+<application xmlns="http://ns.adobe.com/air/application/3.8">
+  <id>com.bitmasq.hello</id>
+  <name>Hello World</name>
+  <filename>Helloworld</filename>
+  <versionNumber>15.01.14</versionNumber>
+  <initialWindow>
+    <content>game.swf</content>
+    <renderMode>direct</renderMode>
+    <autoOrients>false</autoOrients>
+    <aspectRatio>landscape</aspectRatio>
+  </initialWindow>
+</application>
