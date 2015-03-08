@@ -6,15 +6,16 @@ ifeq ($(OS),Windows_NT)
    FLEX_SDK=c:/FlexSDK
    ANDROID_SDK=c:/android-sdk
 else
-   FLEX_SDK=/opt/flex-sdk
-   ANDROID_SDK=/opt/android-sdk
+   FLEX_SDK=~/ApacheFlex
+   ANDROID_SDK=~/android-sdks
 endif
 
 APP=ld28
 
 APP_XML=$(APP).xml
 
-SOURCES=source/Startup.hx source/Root.hx source/TitleMenu.hx source/Credits.hx source/Battle.hx source/Instructions.hx
+#Part of the line below is commented out because I don't have those files
+SOURCES=src/Startup.hx src/Root.hx #src/TitleMenu.hx src/Credits.hx src/Battle.hx src/Instructions.hx
 
 ##
 ## It's less common that you would need to change anything after this line.
@@ -75,8 +76,11 @@ $(APP).swf: $(SOURCES)
 	-main Startup \
 	-lib air3 \
 	-swf $(APP).swf \
-	-swf-lib vendor/gamepad.swc \
-	-swf-lib vendor/Starling_1_4.swc --macro "patchTypes('vendor/starling.patch')"
+	-swf-lib vendor/starling.swc --macro "patchTypes('vendor/starling.patch')"
 
 $(APP).apk: $(APP).swf sign.pfx
 	$(ADT) -package -target apk-captive-runtime -storetype pkcs12 -keystore $(SIGN_CERT) $(APP).apk $(APP_XML) $(APP).swf assets ouya_icon.png
+
+
+
+
