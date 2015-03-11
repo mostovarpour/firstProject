@@ -45,10 +45,10 @@ clean:
 	rm -rf $(APP).swf $(APP).apk
 
 test: $(APP).swf
-	$(ADL) -profile tv -screensize 640x360:640x360 $(APP_XML)
+	$(ADL) -profile tv -screensize 1920x1080:1920x1080 $(APP_XML)
 
 testHi: $(APP).swf
-	$(ADL) -profile tv -screensize 1280x720:1280x720 $(APP_XML)
+	$(ADL) -profile tv -screensize 1920x1080:1920x1080 $(APP_XML)
 
 sign.pfx:
 	$(ADT) -certificate -validityPeriod 25 -cn SelfSigned 1024-RSA $(SIGN_CERT) $(SIGN_PWD)
@@ -58,28 +58,28 @@ install: $(APP).apk
 
 $(APP)Web.swf: $(SOURCES)
 	haxe \
-	-cp source \
+	-cp src \
 	-cp vendor \
 	-swf-version $(SWF_VERSION) \
-	-swf-header 1280:720:60:ffffff \
+	-swf-header 1920:1080:60:ffffff \
 	-main Startup \
 	-swf $(APP)Web.swf \
 	-swf-lib vendor/gamepadWeb.swc \
-	-swf-lib vendor/Starling_1_4.swc --macro "patchTypes('vendor/starling.patch')"
+	-swf-lib vendor/starling.swc --macro "patchTypes('vendor/starling.patch')"
 
 $(APP).swf: $(SOURCES)
 	haxe \
-	-cp source \
+	-cp src \
 	-cp vendor \
 	-swf-version $(SWF_VERSION) \
-	-swf-header 1280:720:60:ffffff \
+	-swf-header 1920:1080:60:ffffff \
 	-main Startup \
 	-lib air3 \
 	-swf $(APP).swf \
 	-swf-lib vendor/starling.swc --macro "patchTypes('vendor/starling.patch')"
 
 $(APP).apk: $(APP).swf sign.pfx
-	$(ADT) -package -target apk-captive-runtime -storetype pkcs12 -keystore $(SIGN_CERT) $(APP).apk $(APP_XML) $(APP).swf assets ouya_icon.png
+	$(ADT) -package -target apk-captive-runtime -storetype pkcs12 -keystore $(SIGN_CERT) $(APP).apk $(APP_XML) $(APP).swf assets game_icon.png
 
 
 
